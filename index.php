@@ -21,7 +21,7 @@
                 
                 //if the game is not just started or didnt finished, play 
                 if($squares <> '---------' && !$this->endGame()){
-                    $this->findPlace();
+                    $loc = $this->findPlace();
                 }
                 
                 //check the result!
@@ -29,13 +29,14 @@
                 if($this->endGame ()){
                     echo '<h2>GAME OVER!! DRAW!!!</h2>';
                     echo '<button type="button"><a href="?board=---------">New Game!</a></button></br>';
-                } else if ($this->winner($this->position,'x')){     // x win
-                    echo '<h2>You win. Lucky guesses!</h2> <button type="button"><a href="?board=---------">New Game!</a></button></br>';
-                }
-                else if ($this->winner($this->position,'o')){   //o win
+                } else if ($this->winner($this->position,'o')){     // x win
                     echo '<h2>I win.:)</h2><button type="button"><a href="?board=---------">New Game!</a></button></br>';
+                }
+                else if ($this->winner($this->position,'x')){   //o win
+                    echo '<h2>You win. Lucky guesses!</h2> <button type="button"><a href="?board=---------">New Game!</a></button></br>';
                 } else {        //game is not finished yet
-                    echo '<h2>No winner yet, but you are losing.</h2>';
+                    echo '<h2>No winner yet, but you are losing.</h2>'; 
+                     $this->position[$loc]='x';                    
                 }
                 $this->display();
             }
@@ -112,10 +113,9 @@
                     if($this->position[$i] == '-'){
                         $this->newposition = $this->position;                    
                         $this->newposition[$i] = 'x';
-                        if($this->winner($this->newposition,'x')){
-                            $this->position[$i] = 'x';
-                            return $this->show_cell($i);
-                        }
+                        if($this->winner($this->newposition,'x'))
+                            return $i;
+                        
                     }
                 }
                 //to find the place to block person's win
@@ -123,18 +123,15 @@
                     if($this->position[$i] == '-') {
                         $this->newposition = $this->position;
                         $this->newposition[$i] = 'o';
-                        if($this->winner($this->newposition,'o')){
-                            $this->position[$i] = 'x';
-                            return $this->show_cell($i);
-                        }
+                        if($this->winner($this->newposition,'o'))
+                            return $i;   
                     }
                 }
                 //to find any blank spot
                 while($num = rand(1,9)){
-                    if($this->position[--$num]=='-'){
-                        $this->position[$num]='x';
-                        return $this->show_cell($num);
-                    }
+                    if($this->position[--$num]=='-')
+                        return $num;
+                    
                 }
             }
             //check if the game is finished or not
