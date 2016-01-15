@@ -16,12 +16,13 @@
             var $position;
             //constructor
             function __construct($squares){
-                echo '<h1>Welcome to the Tic-Tac-Toe Game.</h1></br>';
+                echo '<h1>Welcome to the Tic-Tac-Toe Game.</h1>';
                 $this->position = str_split($squares);
                 
                 //if the game is not just started or didnt finished, play 
                 if($squares <> '---------' && !$this->endGame()){
                     $loc = $this->findPlace();
+                    $this->position[$loc]='x';
                 }
                 
                 //check the result!
@@ -31,12 +32,12 @@
                     echo '<button type="button"><a href="?board=---------">New Game!</a></button></br>';
                 } else if ($this->winner($this->position,'o')){     // x win
                     echo '<h2>I win.:)</h2><button type="button"><a href="?board=---------">New Game!</a></button></br>';
+                    $this->position[$loc]='-';
                 }
                 else if ($this->winner($this->position,'x')){   //o win
                     echo '<h2>You win. Lucky guesses!</h2> <button type="button"><a href="?board=---------">New Game!</a></button></br>';
                 } else {        //game is not finished yet
-                    echo '<h2>No winner yet, but you are losing.</h2>'; 
-                     $this->position[$loc]='x';                    
+                    echo '<h2>No winner yet, but you are losing.</h2></br>';                                    
                 }
                 $this->display();
             }
