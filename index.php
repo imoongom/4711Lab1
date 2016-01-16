@@ -26,14 +26,14 @@
                 $this->position = str_split($squares);
                 
                 //if the game is not just started or didnt finished, the computer play.
-                if($squares <> '---------' && !$this->endGame()){
-                    $loc = $this->findPlace();
+                if($squares <> '---------' && !$this->end_game()){
+                    $loc = $this->find_place();
                     $this->position[$loc]='x'; //add computer's playing
                 }
                 
                 //check the result of the game
                 //  if the game is finished without winner
-                if($this->endGame ()){
+                if($this->end_game ()){
                     echo '<h2 style="color:grey;">GAME OVER!! DRAW!!!</h2>';
                     echo '<button type="button"><a href="?board=---------">New Game!</a></button></br></nav>';
                 }
@@ -126,7 +126,7 @@
             //guess the next movement and check if the spot is winnable spot
             // or if should be blocked not to lose
             // if neither spot is existed, choose random spot.
-            function findPlace(){
+            function find_place(){
                 
                 //to check the winning spot
                 for($i=0; $i<9; $i++){
@@ -157,7 +157,7 @@
             }
             
             //check if the game is finished or not without winner
-            function endGame(){
+            function end_game(){
                 for($i=0;$i<9;$i++)
                     if($this->position[$i] == '-')
                         return false;
